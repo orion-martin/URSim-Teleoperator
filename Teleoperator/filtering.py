@@ -16,21 +16,19 @@ class Filter:
 # this is for now a placeholder filter that just shows our filtering system actually does anything
 class LowPass(Filter):
 
-    def __init__(self, cutoff):
-        self.val_filtered_prev = (0, 0, 0)
+    def __init__(self, cutoff_freq, sampling_period):
+        self.val_filtered_prev = 0
         self.first_run = True
-        self.timestamp_last = 0 # an absolute value in time, not a difference, just the last time that the filter was called
-        self.cutoff = cutoff
-        self.RC_milli = 1000 / (2 * math.pi * self.cutoff) # the RC time constant that would produce the given cutoff frequency, in milliseconds
+        self.sampling_period = sampling_period
+        self.calc_alpha(cutoff_freq)
 
-    def calculate_alpha(self, dt) -> float:
-        return dt / (self.RC_milli + dt)
+    def calc_alpha(self, cutoff_freq):
+        tau = 1 / (2 * math.pi * cutoff_freq)
+        self.alpha = 1 / (1 + (tau / self.sampling_period))
 
-    def filter_value(self, val:tuple, timestamp) -> tuple:
+    def filter_value(self, val, timestamp) -> tuple:
 
-        dt = timestamp - self.timestamp_last
-        self.timestamp_last = timestamp
-        alpha = self.calculate_alpha(dt)
+        alpha = self.alpha
 
         # we need to set a value for val_filtered_prev if we've never run before, so we assign it to val on the first run.
         # this basically makes our first run's filtered value just be the unfilitered value, but just for the first run
@@ -38,11 +36,7 @@ class LowPass(Filter):
             self.first_run = False
             self.val_filtered_prev = val
 
-        val_filtered = (
-            (val[0] * alpha) + (self.val_filtered_prev[0] * (1.0 - alpha)),
-            (val[1] * alpha) + (self.val_filtered_prev[1] * (1.0 - alpha)),
-            (val[2] * alpha) + (self.val_filtered_prev[2] * (1.0 - alpha))
-            )
+        val_filtered = (val * alpha) + (self.val_filtered_prev * (1.0 - alpha))
         self.val_filtered_prev = val_filtered
 
         return val_filtered
@@ -54,7 +48,7 @@ class MovingAverage(Filter):
         self.points_last = queue.Queue() # array of last few points. Used for the moving average.
         self.look_back_size = look_back_size # the amount of points that the moving average will look back
     
-    def filter_value(self, val:tuple, timestamp) -> tuple:
+    def filter_value(self, val, timestamp) -> tuple:
 
         dt = timestamp - self.timestamp_last
         self.timestamp_last = timestamp
@@ -64,14 +58,14 @@ class MovingAverage(Filter):
         if (self.points_last.qsize() > self.look_back_size):
             self.points_last.get_nowait()
 
-        averaged_val = (0, 0, 0)
+        averaged_val = 0
 
         queue_elements = list(self.points_last.queue)
         queue_elements_len = len(queue_elements)
 
         for cur_past_point in queue_elements:
-            averaged_val = tuple(summing_point_val + past_point_val for summing_point_val, past_point_val in zip(averaged_val, cur_past_point))
+            averaged_val += cur_past_point
 
-        averaged_val = tuple(summing_point_val / queue_elements_len for summing_point_val in averaged_val)
+        averaged_val /=  queue_elements_len
 
         return averaged_val
