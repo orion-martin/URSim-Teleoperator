@@ -1,8 +1,9 @@
 import filtering
 
-x_filter = filtering.MovingAverage(10)
-y_filter = filtering.MovingAverage(10)
-z_filter = filtering.MovingAverage(10)
+
+x_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
+y_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
+z_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
 
 def filter_wrist_position(wrist_position, timestamp):
 

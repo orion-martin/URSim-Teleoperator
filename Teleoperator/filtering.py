@@ -69,3 +69,36 @@ class MovingAverage(Filter):
         averaged_val /=  queue_elements_len
 
         return averaged_val
+
+class OneEuro(Filter):
+
+    def __init__(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff):
+        self.val_filtered_prev = 0
+        self.first_run = True
+        self.sampling_period = sampling_period
+        self.min_cutoff_freq = min_cutoff_freq
+        self.beta = beta
+        self.internal_lowpass = LowPass(1, sampling_period)
+        self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
+
+    def filter_value(self, val, timestamp) -> tuple:
+
+        data_update_rate = 1 / self.sampling_period
+
+        # we need to set a value for val_filtered_prev if we've never run before, so we assign it to val on the first run.
+        # this basically makes our first run's filtered value just be the unfilitered value, but just for the first run
+        if (self.first_run):
+            self.first_run = False
+            change_speed = 0 # the derivative of our value
+        else:
+            change_speed = (val - self.internal_lowpass.val_filtered_prev) * data_update_rate# the derivative of our value
+
+        change_speed_filtered = self.derivative_lowpass.filter_value(change_speed, timestamp)
+
+        dynamic_cutoff = self.min_cutoff_freq + (self.beta*abs(change_speed_filtered))
+
+        self.internal_lowpass.calc_alpha(dynamic_cutoff)
+        val_filtered = self.internal_lowpass.filter_value(val, timestamp)
+
+        return val_filtered
+
