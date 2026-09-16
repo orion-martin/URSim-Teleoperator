@@ -6,7 +6,7 @@ import queue
 # create window
 cv2.namedWindow("Teleoperator")
 # get the video path for our video
-video_path = "Videos/hand_held.mp4"
+video_path = "Videos/test_video_1.mp4"
 # declare and initialize video capture from default webcame, allows you to read webcam data on demand
 videoCapture = cv2.VideoCapture(video_path)
 
