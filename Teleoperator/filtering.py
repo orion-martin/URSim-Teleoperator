@@ -7,13 +7,6 @@ class Filter:
         self.first_run = True
         self.timestamp_last = 0 # an absolute value in time, not a difference, just the last time that the filter was called
 
-    # does no filtering in basic filter type
-    def filter_value(self, val:tuple, timestamp) -> tuple:
-        self.first_run = False
-        self.timestamp_last = timestamp
-        return val
-
-# this is for now a placeholder filter that just shows our filtering system actually does anything
 class LowPass(Filter):
 
     def __init__(self, cutoff_freq, sampling_period):
@@ -26,7 +19,7 @@ class LowPass(Filter):
         tau = 1 / (2 * math.pi * cutoff_freq)
         self.alpha = 1 / (1 + (tau / self.sampling_period))
 
-    def filter_value(self, val, timestamp) -> tuple:
+    def filter_value(self, val, timestamp):
 
         alpha = self.alpha
 
@@ -36,7 +29,7 @@ class LowPass(Filter):
             self.first_run = False
             self.val_filtered_prev = val
 
-        val_filtered = (val * alpha) + (self.val_filtered_prev * (1.0 - alpha))
+        val_filtered = (alpha * val) + ((1.0 - alpha) * self.val_filtered_prev)
         self.val_filtered_prev = val_filtered
 
         return val_filtered
@@ -48,7 +41,7 @@ class MovingAverage(Filter):
         self.points_last = queue.Queue() # array of last few points. Used for the moving average.
         self.look_back_size = look_back_size # the amount of points that the moving average will look back
     
-    def filter_value(self, val, timestamp) -> tuple:
+    def filter_value(self, val, timestamp):
 
         dt = timestamp - self.timestamp_last
         self.timestamp_last = timestamp
@@ -81,7 +74,7 @@ class OneEuro(Filter):
         self.internal_lowpass = LowPass(1, sampling_period)
         self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
 
-    def filter_value(self, val, timestamp) -> tuple:
+    def filter_value(self, val, timestamp):
 
         data_update_rate = 1 / self.sampling_period
 
@@ -91,7 +84,7 @@ class OneEuro(Filter):
             self.first_run = False
             change_speed = 0 # the derivative of our value
         else:
-            change_speed = (val - self.internal_lowpass.val_filtered_prev) * data_update_rate# the derivative of our value
+            change_speed = (val - self.internal_lowpass.val_filtered_prev) * data_update_rate # the derivative of our value
 
         change_speed_filtered = self.derivative_lowpass.filter_value(change_speed, timestamp)
 
