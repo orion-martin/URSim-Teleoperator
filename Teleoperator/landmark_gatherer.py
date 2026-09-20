@@ -5,7 +5,7 @@ import threading
 
 MODEL_PATH = Path(__file__).parent / "pose_landmarker_full.task"
 
-snapshot = {"landmarks": None, "timestamp": 0}
+snapshot = {"landmarks": None, "timestamp": 0, "screen_landmarks": None}
 landmark_lock = threading.Lock()
 landmark_written = threading.Event()
 landmark_written.clear()
@@ -13,6 +13,7 @@ landmark_written.clear()
 def on_result(result, output_image, timestamp_ms):
     with landmark_lock:
         snapshot["landmarks"] = result.pose_world_landmarks
+        snapshot["screen_landmarks"] = result.pose_landmarks
         snapshot["timestamp"] = timestamp_ms 
         landmark_written.set()
 
@@ -37,4 +38,4 @@ def landmark_async_process_from_frame(landmarker, frame, timestamp):
 def landmarks_get_with_timestamp():
     with landmark_lock:
         landmark_written.clear()
-        return (snapshot["landmarks"], snapshot["timestamp"])
+        return (snapshot["landmarks"], snapshot["timestamp"], snapshot["screen_landmarks"])
