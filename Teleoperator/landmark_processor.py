@@ -1,9 +1,9 @@
 import filtering
 
 
-x_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
-y_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
-z_filter = filtering.OneEuro(1, 1/30, 0.1, 1)
+y_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+x_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+z_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
 
 def filter_wrist_position(wrist_position, timestamp):
 
