@@ -9,8 +9,6 @@ import data_tracker
 import cv2
 import sys
 import random
-
-
 import numpy as np
 
 def project_filtered_world_to_pixel(
@@ -86,11 +84,15 @@ def project_filtered_world_to_pixel(
 try:
     with landmark_gatherer.vision.PoseLandmarker.create_from_options(landmark_gatherer.options) as landmarker:
 
+        is_first_run = True
+
         data_tracker.logging_start()
         robot_director.start()
 
         t0 = time.perf_counter_ns() // 1000000
         robot_director.t0 = t0
+
+        opencv_handler.start()
 
         while (opencv_handler.frameCapOk):
 
@@ -106,48 +108,57 @@ try:
                     break
                 
                 frame = opencv_handler.frame
+            frame_counter = 0
+            with opencv_handler.frame_counter_lock:
+                frame_counter = opencv_handler.frame_counter
+
+            landmark_gatherer.landmark_async_process_from_frame(landmarker, frame, (time.perf_counter_ns() // 1000000) - t0, frame_counter)
+
+            if (landmark_gatherer.landmark_written.is_set()):
+                landmarks, timestamp, screen_landmarks = landmark_gatherer.landmarks_get_with_timestamp()
+                frame_ind_for_landmark = landmark_gatherer.frame_lookup_table[timestamp] # this is the frame from the video stream that was used to produce "landmarks", "timestamp", and "screen_landmarks". So this is the frame that should be referred to when talking about "this frame", rather than opencv_handler.frame_counter, as that is just the last frame processed, not the frame used for the variables
+
+                if landmarks:
+
+                    wrist_position = landmark_gatherer.wrist_position_get(landmarks)
+
+                    # wrist_position[0] += random.randint(-1000, 1000) / 10000
+                    # wrist_position[1] += random.randint(-1000, 1000) / 10000
+                    # wrist_position[2] += random.randint(-1000, 1000) / 10000
+
+                    wrist_position_unfiltered = wrist_position
+                    if wrist_position is not None:
 
 
+                        data_ind = data_tracker.data_dict_init("timestamps")
+                        data_tracker.data_element_add_group("timestamps", data_ind, ['t_obtained', 't_used', 'frame_used'], [timestamp, (time.perf_counter_ns() // 1000000) - t0, frame_ind_for_landmark])
+                        data_tracker.data_quick_write("pre_filter_position", ['x', 'y', 'z', 't_write'], [wrist_position[0], wrist_position[1], wrist_position[2], frame_ind_for_landmark])
 
+                        wrist_position = landmark_processor.filter_wrist_position(wrist_position, (time.perf_counter_ns() // 1000000) - t0)
+                        data_tracker.data_quick_write("post_filter_position", ['x', 'y', 'z', 't_write'], [wrist_position[0], wrist_position[1], wrist_position[2], frame_ind_for_landmark])
+                        position_mapped = landmark_mapper.wrist_map_to_robot(wrist_position)
+
+                        data_tracker.data_element_add("timestamps", data_ind, "t_processed", (time.perf_counter_ns() // 1000000) - t0)
+
+                        robot_director.update_target(position_mapped, data_ind)
+
+                    filtered_circle_point = project_filtered_world_to_pixel(screen_landmarks[0], landmarks[0], wrist_position, 16, 1920, 1080)
+                    cv2.circle(frame, (round(filtered_circle_point[0]), round(filtered_circle_point[1])), 12, (0, 255, 0), -1)
+
+                    unfiltered_circle_point = project_filtered_world_to_pixel(screen_landmarks[0], landmarks[0], wrist_position_unfiltered, 16, 1920, 1080)
+                    cv2.circle(frame, (round(unfiltered_circle_point[0]), round(unfiltered_circle_point[1])), 12, (0, 0, 255), -1)
+                else:
+                    print("empty landmarks")
+            
+            cv2.imshow("Teleoperator", frame)
             programOk = opencv_handler.finish_frame()
             if (not programOk):
                 break
 
-            landmark_gatherer.landmark_async_process_from_frame(landmarker, frame, (time.perf_counter_ns() // 1000000) - t0)
+            if is_first_run:
+                landmark_gatherer.landmark_written.wait()
+                is_first_run = False
 
-            if (landmark_gatherer.landmark_written.is_set()):
-                landmarks, timestamp, screen_landmarks = landmark_gatherer.landmarks_get_with_timestamp()
-
-                if not landmarks:
-                    continue
-
-
-                wrist_position = landmark_gatherer.wrist_position_get(landmarks)
-                if wrist_position is not None:
-
-                    frame_counter = 0
-                    with opencv_handler.frame_counter_lock:
-                        frame_counter = opencv_handler.frame_counter
-
-                    data_ind = data_tracker.data_dict_init("timestamps")
-                    data_tracker.data_element_add_group("timestamps", data_ind, ['t_obtained', 't_used', 'frame_used'], [timestamp, (time.perf_counter_ns() // 1000000) - t0, frame_counter])
-                    data_tracker.data_quick_write("pre_filter_position", ['x', 'y', 'z', 't_write'], [wrist_position[0], wrist_position[1], wrist_position[2], timestamp])
-
-                    wrist_position = landmark_processor.filter_wrist_position(wrist_position, (time.perf_counter_ns() // 1000000) - t0)
-                    data_tracker.data_quick_write("post_filter_position", ['x', 'y', 'z', 't_write'], [wrist_position[0], wrist_position[1], wrist_position[2], timestamp])
-                    position_mapped = landmark_mapper.wrist_map_to_robot(wrist_position)
-
-                    data_tracker.data_element_add("timestamps", data_ind, "t_processed", (time.perf_counter_ns() // 1000000) - t0)
-
-                    robot_director.update_target(position_mapped, data_ind)
-
-                filtered_circle_point = project_filtered_world_to_pixel(screen_landmarks[0], landmarks[0], wrist_position, 16, 1920, 1080)
-                cv2.circle(frame, (round(filtered_circle_point[0]), round(filtered_circle_point[1])), 12, (0, 255, 0), -1)
-
-                unfiltered_circle_point = project_filtered_world_to_pixel(screen_landmarks[0], landmarks[0], wrist_position_unfiltered, 16, 1920, 1080)
-                cv2.circle(frame, (round(unfiltered_circle_point[0]), round(unfiltered_circle_point[1])), 12, (0, 0, 255), -1)
-
-            cv2.imshow("Teleoperator", frame)
             
 
 

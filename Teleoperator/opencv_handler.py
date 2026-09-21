@@ -12,7 +12,7 @@ videoCapture = cv2.VideoCapture(video_path)
 
 # if this is true, the frame processor will fully process every single frame in the video, storing them to frame_queue, before any frames are pushed.
 # if this is false, frames will be processed at the same time as they are pushed (note that a single frame is always processed first so that there is a frame to be pushed)
-PROCESS_FRAMES_FIRST = False
+PROCESS_FRAMES_FIRST = True
 
 frameCapOk, frame = videoCapture.isOpened(), None
 cap_good = frameCapOk
@@ -28,7 +28,6 @@ frame_counter = 0
 frame_counter_lock = threading.Lock()
 
 frame_queue = queue.Queue(maxsize=(0 if PROCESS_FRAMES_FIRST else 4))
-
 
 def process_frame():
 
@@ -59,10 +58,10 @@ def push_frame():
     PERIOD:int = (1e9/30) # 30 fps, in nanoseconds
     BUFFER_LEN:int = 2e6 # 2ms buffer, in nanoseconds
 
-    frameCapOkThreaded, frameThreaded = frame_queue.get()
+    frameCapOkThreaded, frameThreaded = True, None
 
     t_ns_start = time.perf_counter_ns()
-    frameCount = 1
+    frameCount = 0
 
     # fps_timer = 0
     # second_timer_milli = 0
@@ -70,10 +69,12 @@ def push_frame():
 
     while (frameCapOkThreaded):
 
+        if not videoCapture.isOpened():
+            break
+
         t_ns_now = time.perf_counter_ns()
 
         t_ns_deadline = t_ns_start + (frameCount * PERIOD)
-
 
         if (t_ns_now >= t_ns_deadline):
             pass
@@ -89,36 +90,27 @@ def push_frame():
 
         while (t_ns_now >= (t_ns_start + (frameCount * PERIOD))):
             frameCount += 1
-        
-        # second_timer_milli += (t_ns_now - t_ns_prev) // 1000000
-        # t_ns_prev = t_ns_now
-        # fps_timer += 1
-
-        # if (second_timer_milli > 1000):  # Reset the timer every second
-        #     print(f"FPS: {fps_timer}")
-        #     second_timer_milli = 0
-        #     fps_timer = 0
-
-        frameCapOkThreaded, frameThreaded = frame_queue.get()
+            frameCapOkThreaded, frameThreaded = frame_queue.get()
 
         with frame_lock:
             frameCapOk, frame = frameCapOkThreaded, frameThreaded
         with frame_counter_lock:
-            frame_counter += 1
+            frame_counter = frameCount
 
         frame_pushed.set()
 
 frame_process_thread = threading.Thread(target=process_frame)
 frame_push_thread = threading.Thread(target=push_frame)
 
-frame_process_thread.start()
-frame_push_thread.start()
-
 # this ends a frame and returns whether the program should continue running, if it's False, the program should end
 def finish_frame():
     # check if esc was pressed, if it was, return false which ends the program
     keyPress = cv2.waitKey(1)
     return not (keyPress == 27)
+
+def start():
+    frame_process_thread.start()
+    frame_push_thread.start()
 
 def end():
     # close window and release webcam VideoCapture device
