@@ -16,10 +16,12 @@ def data_save_singular(file_name, formatted_data, data_format, data_header):
 
     file_name_with_date = file_name + "__" + formatted_date
 
+    Path(f"Data/{file_name}").mkdir(exist_ok=True)
+
     formatted_name = file_name_with_date + ".txt"
     
     np.savetxt(
-        "Data/" + formatted_name,
+        f"Data/{file_name}/" + formatted_name,
         formatted_data, 
         fmt=data_format, 
         delimiter=',', 
