@@ -1,13 +1,23 @@
 import filtering
 
 
-# y_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
-# x_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
-# z_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+x_filter = None
+y_filter = None
+z_filter = None
 
-z_filter = filtering.LaViola(1.0, 1/30)
-y_filter = filtering.LaViola(1.0, 1/30)
-x_filter = filtering.LaViola(1.0, 1/30)
+def init_filters():
+
+    global x_filter
+    global y_filter
+    global z_filter
+
+    # x_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+    # y_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+    # z_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+
+    x_filter = filtering.LaViola(1.0, 1/30)
+    y_filter = filtering.LaViola(1.0, 1/30)
+    z_filter = filtering.LaViola(1.0, 1/30)
 
 def filter_wrist_position(wrist_position, timestamp):
 

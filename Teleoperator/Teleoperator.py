@@ -86,6 +86,8 @@ try:
 
         is_first_run = True
 
+        landmark_processor.init_filters()
+
         data_tracker.logging_start()
         robot_director.start()
 

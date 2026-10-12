@@ -17,15 +17,18 @@ data_dicts = {} # array of dictionaries.
 data_array = {} # dictionary of arrays
 data_type_dict = {}
 data_format_dict = {}
+data_flags_dict = {}
 
 data_log_queue = queue.Queue() # every time a piece of data is marked to be logged, it's added to a queue under this structure ("name", index:int), index is an integer. It is then processed in order.
 
 # appends new data under the given name, with the value being a unique data type, this is used for formatting and saving later
-def data_structure_add(name, data_type, data_format):
+# data flags indicates whether to also save a zero-phase-filtered version of the data, and a zero-phased-then-lagged version of the data respectively
+def data_structure_add(name, data_type, data_format, data_flags = [False, False]):
     data_type_dict[name] = data_type
     data_format_dict[name] = data_format
     data_array[name] = []
     data_dicts[name] = [{} for _ in range(4)]
+    data_flags_dict[name] = data_flags
     data_availability_queue[name] = queue.Queue()
     for i in range(4):
         data_availability_queue[name].put(i)
@@ -66,6 +69,7 @@ def data_format(name):
 
     data_format = data_format_dict[name]
     data_type = data_type_dict[name]
+    data_flags = data_flags_dict[name]
     data = data_array[name]
 
     data_header = ""
@@ -87,7 +91,8 @@ def data_format(name):
 
     final_data: NDArray[np.void] = np.array(formatted_data, dtype=data_type)
 
-    return {"data":final_data, "format":data_format, "header":data_header}
+
+    return {"data":final_data, "format":data_format, "header":data_header, "flags":data_flags}
 
 def log_data_async():
     while (True):
