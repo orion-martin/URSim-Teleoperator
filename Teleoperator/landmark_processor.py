@@ -6,18 +6,27 @@ y_filter = None
 z_filter = None
 
 def init_filters():
+    # init_filters_as_OneEuro()
+    init_filters_as_LaViola()
 
+def init_filters_as_OneEuro():
     global x_filter
     global y_filter
     global z_filter
 
-    # x_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
-    # y_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
-    # z_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+    x_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+    y_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+    z_filter = filtering.OneEuro(0.25, 1/30, 0.1, 5)
+
+def init_filters_as_LaViola():
+    global x_filter
+    global y_filter
+    global z_filter
 
     x_filter = filtering.LaViola(1.0, 1/30)
     y_filter = filtering.LaViola(1.0, 1/30)
     z_filter = filtering.LaViola(1.0, 1/30)
+
 
 def filter_wrist_position(wrist_position, timestamp):
 
