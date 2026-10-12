@@ -19,7 +19,7 @@ class LowPass(Filter):
         tau = 1 / (2 * math.pi * cutoff_freq)
         self.alpha = 1 / (1 + (tau / self.sampling_period))
 
-    def filter_value(self, val, timestamp):
+    def filter_value(self, val, timestamp, frame):
 
         alpha = self.alpha
 
@@ -41,7 +41,7 @@ class MovingAverage(Filter):
         self.points_last = queue.Queue() # array of last few points. Used for the moving average.
         self.look_back_size = look_back_size # the amount of points that the moving average will look back
     
-    def filter_value(self, val, timestamp):
+    def filter_value(self, val, timestamp, frame):
 
         dt = timestamp - self.timestamp_last
         self.timestamp_last = timestamp
@@ -65,7 +65,7 @@ class MovingAverage(Filter):
 
 class OneEuro(Filter):
 
-    def __init__(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff):
+    def __init__(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff, map_and_use_alphas=True):
         self.val_filtered_prev = 0
         self.first_run = True
         self.sampling_period = sampling_period
@@ -74,7 +74,24 @@ class OneEuro(Filter):
         self.internal_lowpass = LowPass(1, sampling_period)
         self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
 
-    def filter_value(self, val, timestamp):
+        # a dictionary that maps frames to alpha values for each frame.
+        # in a normal run this will only be saving values and will never be used, just written.
+        # but then at the end of the program we rerun the One Euro starting from frame zero,
+        # and that run will use the alpha for each frame, so it'll filter identically as the inital run
+        self.frames_to_alphas = {-1:0}
+        self.map_and_use_alphas = map_and_use_alphas
+
+    def reset_but_keep_frames_to_alphas(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff):
+        self.val_filtered_prev = 0
+        self.first_run = True
+        self.sampling_period = sampling_period
+        self.min_cutoff_freq = min_cutoff_freq
+        self.beta = beta
+        self.internal_lowpass = LowPass(1, sampling_period)
+        self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
+
+    # One Euro uses the frame parameter because we need to save the alpha for each frame to rerun the exact filtering process again and measure lag later
+    def filter_value(self, val, timestamp, frame):
 
         data_update_rate = 1 / self.sampling_period
 
@@ -86,12 +103,28 @@ class OneEuro(Filter):
         else:
             change_speed = (val - self.internal_lowpass.val_filtered_prev) * data_update_rate # the derivative of our value
 
-        change_speed_filtered = self.derivative_lowpass.filter_value(change_speed, timestamp)
+        change_speed_filtered = self.derivative_lowpass.filter_value(change_speed, timestamp, frame)
 
         dynamic_cutoff = self.min_cutoff_freq + (self.beta*abs(change_speed_filtered))
 
-        self.internal_lowpass.calc_alpha(dynamic_cutoff)
-        val_filtered = self.internal_lowpass.filter_value(val, timestamp)
+        dynamic_alpha = 0
+
+        if (not self.map_and_use_alphas): # if we aren't supposed to map or use the mapped alpha values then just calculate our alpha and use it as normal
+            self.internal_lowpass.calc_alpha(dynamic_cutoff) # update alpha
+            dynamic_alpha = self.internal_lowpass.alpha # get our updated alpha value
+        else: # otherwise, go through and record the alpha if it has not been recorded yet, or use a previous one if it's been recorded already
+
+            if (not frame in self.frames_to_alphas): # if current frame hasn't run with an alpha before
+                
+                self.internal_lowpass.calc_alpha(dynamic_cutoff) # update alpha
+                dynamic_alpha = self.internal_lowpass.alpha # get our updated alpha value
+                
+                self.frames_to_alphas[frame] = dynamic_alpha # map our alpha value to the current frame
+            else: # otherwise, if the alpha has already been recorded in a previous run, then use that recorded alpha value
+                dynamic_alpha = self.frames_to_alphas[frame]
+
+        self.internal_lowpass.alpha = dynamic_alpha
+        val_filtered = self.internal_lowpass.filter_value(val, timestamp, frame)
 
         return val_filtered
 
@@ -108,7 +141,7 @@ class LaViola(Filter):
         self.lowpass_first_order = LowPass(cutoff_freq, sampling_period)
         self.lowpass_second_order = LowPass(cutoff_freq, sampling_period)
 
-    def filter_value(self, val, timestamp):
+    def filter_value(self, val, timestamp, frame):
 
         data_update_rate = 1 / self.sampling_period
 
@@ -117,10 +150,10 @@ class LaViola(Filter):
         if (self.first_run):
             self.first_run = False
 
-            return self.lowpass_first_order.filter_value(val, timestamp)
+            return self.lowpass_first_order.filter_value(val, timestamp, frame)
 
-        val_first_order = self.lowpass_first_order.filter_value(val, timestamp)
-        val_second_order = self.lowpass_second_order.filter_value(val_first_order, timestamp)
+        val_first_order = self.lowpass_first_order.filter_value(val, timestamp, frame)
+        val_second_order = self.lowpass_second_order.filter_value(val_first_order, timestamp, frame)
 
         val_filtered = (2*val_first_order) - (val_second_order)
 

@@ -7,7 +7,7 @@ import landmark_processor
 # fps is just the framerate our filter assumes.
 def run_filter_arbitrarily(data, fps):
 
-    landmark_processor.init_filters()
+    landmark_processor.reset_filters_for_measurements()
 
     data_len = len(data)
 
@@ -24,7 +24,7 @@ def run_filter_arbitrarily(data, fps):
 
         idealized_time_stamp = frame * period
 
-        data_filtered_singular = landmark_processor.filter_wrist_position([x, y, z], idealized_time_stamp)
+        data_filtered_singular = landmark_processor.filter_wrist_position([x, y, z], idealized_time_stamp, frame)
 
         result.append([data_filtered_singular[0], data_filtered_singular[1], data_filtered_singular[2], frame])
 
