@@ -142,7 +142,7 @@ try:
 
                         data_tracker.data_element_add("timestamps", data_ind, "t_processed", (time.perf_counter_ns() // 1000000) - t0)
 
-                        robot_director.update_target(position_mapped, data_ind)
+                        robot_director.update_target(position_mapped, data_ind, frame_counter)
 
                     filtered_circle_point = project_filtered_world_to_pixel(screen_landmarks[0], landmarks[0], wrist_position, 16, 1920, 1080)
                     cv2.circle(frame, (round(filtered_circle_point[0]), round(filtered_circle_point[1])), 12, (0, 255, 0), -1)

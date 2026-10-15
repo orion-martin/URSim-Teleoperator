@@ -29,7 +29,7 @@ data_tracker.data_structure_add(
         ('x', 'f8'),
         ('y', 'f8'),
         ('z', 'f8'),
-        ('t_write', 'i8'), # the timestamp for exactly when this data was written
+        ('t_write', 'i8'), # the frame when this data was written
     ],
     [
         '%.16f',

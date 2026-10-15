@@ -12,6 +12,7 @@ control_error = None
 
 target = [0.2, -0.2, 0.6, 0.0, 3.14159, 0.0]
 data_ind = -1
+frame_of_update = -1
 t0 = 0
 
 # this is always running asynchronously at the update speed of the robot arm
@@ -45,24 +46,25 @@ def update_arm(robot_ip, stop_event:threading.Event):
             with (position_lock):
                 tcp_pose = list(target)
                 data_ind_threaded = data_ind
+                frame_of_update_threaded = frame_of_update
             
             if (data_ind_threaded != data_ind_last):
                 data_tracker.data_element_add("timestamps", data_ind_threaded, "t_published", (time.perf_counter_ns() // 1000000) - t0)
                 data_tracker.data_report("timestamps", data_ind_threaded)
+
+                robot_tcp = rtde_receive.getActualTCPPose()
+
+                #!!!!!!! NEEDS TO BE FIXED
+                # to compare out robot TCP to our other recorded points, we need to get them into a matching coordinate defition (I.E. which axis is consider up, etc)
+                re_defined_x = -robot_tcp[2]  # our definition of X is the robots definition of Y
+                re_defined_y = robot_tcp[0] # our definition of Y is the robots definition of -X
+                re_defined_z = -robot_tcp[1] # our definition of Z is the robots definition of Z
+                
+                data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [re_defined_x, re_defined_y, re_defined_z, frame_of_update])
+
                 data_ind_last = data_ind_threaded
 
-
-
-
-            # if (tsg <= 1000):
-            #     home = [0, -math.pi/2, math.pi/2, -math.pi/2, -math.pi/2, 0]
-            #     rtde.moveJ(home, 1.0, 0.5)
-            # else:
             rtde.servoL(tcp_pose, 0.5, 0.5, 1.0/500, 0.03, 500)
-
-            robot_tcp = rtde_receive.getActualTCPPose()
-            data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [robot_tcp[0], robot_tcp[1], robot_tcp[2], (time.perf_counter_ns() // 1000000) - t0])
-
 
             rtde.waitPeriod(start_time)
 
@@ -75,12 +77,14 @@ def update_arm(robot_ip, stop_event:threading.Event):
 
     return
 # this is called to update the target used in update_arm
-def update_target(target_new, data_ind_new):
+def update_target(target_new, data_ind_new, frame_ind):
     global target
     global data_ind
+    global frame_of_update
     with (position_lock):
         target = list(target_new)
         data_ind = data_ind_new
+        frame_of_update = frame_ind
 
 control_ip = "localhost"
 control_thread = threading.Thread()
