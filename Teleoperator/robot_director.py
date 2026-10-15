@@ -54,12 +54,10 @@ def update_arm(robot_ip, stop_event:threading.Event):
 
                 robot_tcp = rtde_receive.getActualTCPPose()
 
-                #!!!!!!! NEEDS TO BE FIXED
-                # to compare out robot TCP to our other recorded points, we need to get them into a matching coordinate defition (I.E. which axis is consider up, etc)
-                re_defined_x = -robot_tcp[2]  # our definition of X is the robots definition of Y
-                re_defined_y = robot_tcp[0] # our definition of Y is the robots definition of -X
-                re_defined_z = -robot_tcp[1] # our definition of Z is the robots definition of Z
-                
+                re_defined_x = robot_tcp[1]   # our X = robot Y
+                re_defined_y = -robot_tcp[2]  # our Y = robot -Z
+                re_defined_z = -robot_tcp[0]  # our Z = robot -X
+
                 data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [re_defined_x, re_defined_y, re_defined_z, frame_of_update])
 
                 data_ind_last = data_ind_threaded
