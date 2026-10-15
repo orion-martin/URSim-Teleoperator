@@ -76,8 +76,6 @@ def data_zero_phase(name, data): # returns zero phased data
 
     data_as_2d_array = structured_to_unstructured(data["data"])
 
-    print(data_as_2d_array)
-
     data_zero_phased = zero_phase_filter.run_zero_phase_on_data(data_as_2d_array[:, :3])
 
     data_zero_phased_with_frame = np.column_stack((data_zero_phased, data_as_2d_array[:, 3]))
