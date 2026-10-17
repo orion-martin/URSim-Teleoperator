@@ -67,7 +67,7 @@ try:
 
                         data_tracker.data_element_add("timestamps", data_ind, "t_processed", (time.perf_counter_ns() // 1000000) - t0)
 
-                        robot_director.update_target(position_mapped, data_ind, frame_counter)
+                        robot_director.update_target(position_mapped, data_ind, frame_ind_for_landmark)
                 else:
                     print("empty landmarks")
             

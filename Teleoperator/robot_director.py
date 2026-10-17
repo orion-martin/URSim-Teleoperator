@@ -58,7 +58,7 @@ def update_arm(robot_ip, stop_event:threading.Event):
                 re_defined_y = -robot_tcp[2]  # our Y = robot -Z
                 re_defined_z = -robot_tcp[0]  # our Z = robot -X
 
-                data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [re_defined_x, re_defined_y, re_defined_z, frame_of_update])
+                data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [re_defined_x, re_defined_y, re_defined_z, frame_of_update_threaded])
 
                 data_ind_last = data_ind_threaded
 
