@@ -4,6 +4,7 @@ import zero_phase_filter
 import arbitrary_data_filterer as arbitrary_data_filterer
 import numpy as np
 from numpy.lib.recfunctions import structured_to_unstructured
+import math
 
 data_tracker.data_structure_add(
     "timestamps",
@@ -102,6 +103,68 @@ def data_difference_get(data_from, data_to):
         data_diffed.append(diff_xyz)
 
     return data_diffed
+# gets the RMSE of an array of values
+def RMSE_get_from_error_array(arr):
+
+    count = len(arr)
+    
+    total_squared = 0.0
+    averaged_total_squared = 0.0
+    root_mean_squared_error = 0.0
+
+    for cur_val in arr:
+        total_squared += cur_val**2
+
+    averaged_total_squared = total_squared / count
+    root_mean_squared_error = math.sqrt(averaged_total_squared)
+
+    return root_mean_squared_error
+# takes in an array of arrays (structured like [[x,y,z],[x,y,z]]) and gets the RMSE per axis, and the total RMSE.
+# returns an array containing RMSE for x, y, z, and the total across all axes 
+def RMSE_get_from_error_data(data):
+    RMSEs = [0.0, 0.0, 0.0, 0.0]
+
+    for cur_axis in range(0, 3):
+        # the data parameter is structured like [[x,y,z],[x,y,z]], but we need our data arrays like [x0,x1,x2]
+        # so we restructure it into data_cur
+        data_cur = []
+
+        for cur_data_point in data:
+            data_cur.append(cur_data_point[cur_axis])
+        
+        RMSEs[cur_axis] = RMSE_get_from_error_array(data_cur)
+    RMSEs[3] = math.sqrt((RMSEs[0]**2) + (RMSEs[1]**2) + (RMSEs[2]**2))
+
+    return [[RMSEs[0], RMSEs[1], RMSEs[2], RMSEs[3]]]
+def average_get_from_error_array(arr):
+
+    count = len(arr)
+    
+    total = 0.0
+    averaged_total = 0.0
+
+    for cur_val in arr:
+        total += cur_val
+
+    averaged_total = total / count
+
+    return averaged_total
+def average_get_from_error_data(data):
+    averages = [0.0, 0.0, 0.0, 0.0]
+
+    for cur_axis in range(0, 3):
+        # the data parameter is structured like [[x,y,z],[x,y,z]], but we need our data arrays like [x0,x1,x2]
+        # so we restructure it into data_cur
+        data_cur = []
+
+        for cur_data_point in data:
+            data_cur.append(cur_data_point[cur_axis])
+        
+        averages[cur_axis] = average_get_from_error_array(data_cur)
+    averages[3] = math.sqrt((averages[0]**2) + (averages[1]**2) + (averages[2]**2))
+
+    return [[averages[0], averages[1], averages[2], averages[3]]]
+
 # we compare the result of the filtering to the raw unfiltered through a zero-phased version of the raw unfiltered data
 def data_postfilter_measurements_save(data_prefiltered_name, data_postfiltered_name):
     # get the base data (the "original" being compared against)
@@ -156,6 +219,10 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
     # I've left them commented out, but if you need them for some reason, just uncomment them and it should work out of the box.
     data_saver.data_save_singular("prefilter_position_noiseless", data_prefiltered_noiseless, format, header)
     data_saver.data_save_singular("TCP_position_noiseless", data_TCP_noiseless, format, header)
+
+    data_saver.data_save_singular("RMSE_jitter", RMSE_get_from_error_data(data_noise), ['%.16f', '%.16f', '%.16f', '%.16f'], header)
+    data_saver.data_save_singular("average_lag", average_get_from_error_data(data_lag), ['%.16f', '%.16f', '%.16f', '%.16f'], header)
+    
 def data_save(name):
     data = data_tracker.data_format(name)
 
