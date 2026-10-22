@@ -1,5 +1,9 @@
 import math
 import queue
+from filterpy.kalman import KalmanFilter
+from filterpy.common import Q_discrete_white_noise
+import numpy as np
+
 
 class Filter:
     def __init__(self):
@@ -7,6 +11,34 @@ class Filter:
         self.first_run = True
         self.timestamp_last = 0 # an absolute value in time, not a difference, just the last time that the filter was called
 
+class Kalman(Filter):
+    def __init__(self, sampling_period, R, sweep):
+        self.first_run = True
+        self.sampling_period = sampling_period
+
+        dt = sampling_period
+
+        self.kalman_filter = KalmanFilter(dim_x=2, dim_z=1) # the actual kalman filter we'll be using
+        self.kalman_filter.F = np.array([[1, dt], [0, 1]]) # the predicition model we'll be using, built from a position and a velocity. Basically it's how position is updated, and how velocity is updated.
+        self.kalman_filter.R = R # the noise covariance, basically how much we distrust our own inputs
+        self.kalman_filter.H = np.array([[1, 0]]) # our update model, which says how new inputs affect our current state
+        # Q is basically how much we distrust our prediction model, R and Q together form our final x value;
+        # if we distrust our prediction a ton, we'll rely more on our measurements, and vice versa.
+        self.kalman_filter.Q = Q_discrete_white_noise(dim=2, dt=dt, var=sweep)
+
+        self.kalman_filter.x = np.array([0., 0.]) # the actual current value the kalman filter is saying as its "final" answer
+        self.kalman_filter.P *= 100 # this is basically how the model trusts its current output vs the measurements; it trusts its predictions more and more after more time since a measurement
+
+    def filter_value(self, val, timestamp, frame):
+
+        if (self.first_run):
+            self.first_run = False
+            self.kalman_filter.x[0] = val
+        self.kalman_filter.predict()
+
+        self.kalman_filter.update(val)
+
+        return self.kalman_filter.x[0]
 class LowPass(Filter):
 
     def __init__(self, cutoff_freq, sampling_period):
