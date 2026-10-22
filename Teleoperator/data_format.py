@@ -144,11 +144,12 @@ def average_get_from_error_array(arr):
     averaged_total = 0.0
 
     for cur_val in arr:
-        total += cur_val
+        total += abs(cur_val)
 
     averaged_total = total / count
 
     return averaged_total
+# returns an array containing an array that has x-lag, y-lag, z-lag, and full position-lag
 def average_get_from_error_data(data):
     averages = [0.0, 0.0, 0.0, 0.0]
 
@@ -161,9 +162,13 @@ def average_get_from_error_data(data):
             data_cur.append(cur_data_point[cur_axis])
         
         averages[cur_axis] = average_get_from_error_array(data_cur)
-    averages[3] = math.sqrt((averages[0]**2) + (averages[1]**2) + (averages[2]**2))
 
-    return [[averages[0], averages[1], averages[2], averages[3]]]
+    total_position_error = 0
+    for cur_data_point in data:
+        total_position_error += math.sqrt((cur_data_point[0]**2) + (cur_data_point[1]**2) + (cur_data_point[2]**2))
+    average_position_error = total_position_error / len(data)
+
+    return [[averages[0], averages[1], averages[2], average_position_error]]
 
 # we compare the result of the filtering to the raw unfiltered through a zero-phased version of the raw unfiltered data
 def data_postfilter_measurements_save(data_prefiltered_name, data_postfiltered_name):
