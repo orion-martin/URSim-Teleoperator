@@ -12,7 +12,9 @@ videoCapture = cv2.VideoCapture(video_path)
 
 # if this is true, the frame processor will fully process every single frame in the video, storing them to frame_queue, before any frames are pushed.
 # if this is false, frames will be processed at the same time as they are pushed (note that a single frame is always processed first so that there is a frame to be pushed)
-PROCESS_FRAMES_FIRST = True
+PROCESS_FRAMES_FIRST = False
+
+force_stop = threading.Event()
 
 frameCapOk, frame = videoCapture.isOpened(), None
 cap_good = frameCapOk
@@ -27,7 +29,8 @@ frame_pushed.clear()
 frame_counter = 0
 frame_counter_lock = threading.Lock()
 
-frame_queue = queue.Queue(maxsize=(0 if PROCESS_FRAMES_FIRST else 4))
+frame_queue = queue.Queue(maxsize=(0 if PROCESS_FRAMES_FIRST else 8))
+frame_queue_not_empty = threading.Event()
 
 def process_frame():
 
@@ -37,11 +40,13 @@ def process_frame():
     if not PROCESS_FRAMES_FIRST:
         allow_frame_pushing.set()
 
-    while (frameCapOkThreaded):
+    while (frameCapOkThreaded and (not force_stop.is_set())):
 
         frameCapOkThreaded, frameThreaded = videoCapture.read()    
 
         frame_queue.put((frameCapOkThreaded, frameThreaded))
+
+        frame_queue_not_empty.set()
 
     if PROCESS_FRAMES_FIRST:
         allow_frame_pushing.set()
@@ -67,8 +72,10 @@ def push_frame():
     # second_timer_milli = 0
     # t_ns_prev = 0
 
-    while (frameCapOkThreaded):
+    frame_queue_not_empty.wait()
 
+    while (frameCapOkThreaded and (not force_stop.is_set())):
+    
         if not videoCapture.isOpened():
             break
 
@@ -90,7 +97,7 @@ def push_frame():
 
         while (t_ns_now >= (t_ns_start + (frameCount * PERIOD))):
             frameCount += 1
-            frameCapOkThreaded, frameThreaded = frame_queue.get()
+            frameCapOkThreaded, frameThreaded = frame_queue.get(False)
 
         with frame_lock:
             frameCapOk, frame = frameCapOkThreaded, frameThreaded
@@ -116,5 +123,8 @@ def end():
     # close window and release webcam VideoCapture device
     cv2.destroyWindow("Teleoperator")
     videoCapture.release()
+
+    force_stop.set()
     frame_process_thread.join()
     frame_push_thread.join()
+    
