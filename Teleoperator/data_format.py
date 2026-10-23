@@ -170,34 +170,6 @@ def average_get_from_error_data(data):
 
     return [[averages[0], averages[1], averages[2], average_position_error]]
 
-# we compare the result of the filtering to the raw unfiltered through a zero-phased version of the raw unfiltered data
-def data_postfilter_measurements_save(data_prefiltered_name, data_postfiltered_name):
-    # get the base data (the "original" being compared against)
-    data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
-    data_prefiltered = data_prefiltered_suite["data"]
-    # remove noise from it
-    data_noiseless = data_zero_phase(data_prefiltered)
-    # lag it so we can compare our comparison data to it (since comparison data is lagged)
-    data_noiseless_lagged = arbitrary_data_filterer.run_filter_arbitrarily(data_noiseless, 30)
-
-    # get the comparison data to compare against the base data
-    data_postfiltered_suite = data_tracker.data_format(data_postfiltered_name)
-    data_postfiltered = data_postfiltered_suite["data"]
-
-    data_noise = data_difference_get(data_noiseless_lagged, data_postfiltered) # gets the difference from the ideal-lagged signal to the real-time filtered signal, which is the noise still left over after filtering
-    data_lag = data_difference_get(data_noiseless, data_noiseless_lagged) # gets the difference from the ideal signal to the ideal-lagged signal, which is the lag produced by the filter
-
-    format = data_prefiltered_suite["format"]
-    header = data_prefiltered_suite["header"]
-
-    data_saver.data_save_singular("jitter_left_after_filtering", data_noise, format, header)
-    data_saver.data_save_singular("lag_introduced_by_filter", data_lag, format, header)
-
-    # these two saves aren't necessary, as what they save is just intermediary data used for calculating noise and lag.
-    # I've left them commented out, but if you need them for some reason, just uncomment them and it should work out of the box.
-    # data_saver.data_save_singular("prefilter_position_noiseless", data_noiseless, format, header)
-    # data_saver.data_save_singular("prefilter_position_noiseless_lagged", data_noiseless_lagged, format, header)
-# we compare the result of the filtering to the raw unfiltered through a zero-phased version of the raw unfiltered data
 def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
     # get the base data (the "original" being compared against)
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
