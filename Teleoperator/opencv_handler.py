@@ -17,7 +17,6 @@ PROCESS_FRAMES_FIRST = False
 force_stop = threading.Event()
 
 frameCapOk, frame = videoCapture.isOpened(), None
-cap_good = frameCapOk
 frame_lock = threading.Lock()
 
 allow_frame_pushing = threading.Event()
@@ -57,7 +56,6 @@ def push_frame():
 
     global frameCapOk
     global frame
-    global cap_good
     global frame_counter
 
     PERIOD:int = (1e9/30) # 30 fps, in nanoseconds
