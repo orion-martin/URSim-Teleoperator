@@ -93,9 +93,9 @@ def push_frame():
 
             continue
 
-        while (t_ns_now >= (t_ns_start + (frameCount * PERIOD))):
+        while ((t_ns_now >= (t_ns_start + (frameCount * PERIOD))) and (not force_stop.is_set())):
             frameCount += 1
-            frameCapOkThreaded, frameThreaded = frame_queue.get(False)
+            frameCapOkThreaded, frameThreaded = frame_queue.get()
 
         with frame_lock:
             frameCapOk, frame = frameCapOkThreaded, frameThreaded
@@ -118,11 +118,17 @@ def start():
     frame_push_thread.start()
 
 def end():
+    force_stop.set()
+
+    frame_push_thread.join()
+    frame_process_thread.join()
+
     # close window and release webcam VideoCapture device
     cv2.destroyWindow("Teleoperator")
     videoCapture.release()
 
-    force_stop.set()
-    frame_process_thread.join()
-    frame_push_thread.join()
+
+
+
+
     
