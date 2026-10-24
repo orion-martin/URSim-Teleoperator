@@ -173,13 +173,13 @@ def average_get_from_error_data(data):
 def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
     # get the base data (the "original" being compared against)
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
-    data_prefiltered = data_prefiltered_suite["data"]
+    data_prefiltered = data_prefiltered_suite["data"][30:]
     # the raw hand position with noise removed
     data_prefiltered_noiseless = data_zero_phase(data_prefiltered)
 
     # get the comparison data to compare against the base data
     data_TCP_suite = data_tracker.data_format(data_TCP_name)
-    data_TCP = data_TCP_suite["data"]
+    data_TCP = data_TCP_suite["data"][30:]
     # the raw TCP position with noise removed
     data_TCP_noiseless = data_zero_phase(data_TCP)
 
