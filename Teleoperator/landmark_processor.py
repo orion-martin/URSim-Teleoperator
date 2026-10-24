@@ -19,6 +19,7 @@ def init_filters():
         case 0: # LOW_PASS
             return
         case 1: # MOVING_AVERAGE
+            init_filters_as_moving_average()
             return
         case 2: # LA_VIOLA
             init_filters_as_LaViola()
@@ -29,6 +30,15 @@ def init_filters():
         case 4: # KALMAN
             init_filters_as_Kalman()
             return
+
+def init_filters_as_moving_average():
+    global x_filter
+    global y_filter
+    global z_filter
+
+    x_filter = filtering.MovingAverage(3)
+    y_filter = filtering.MovingAverage(3)
+    z_filter = filtering.MovingAverage(3)
 
 def init_filters_as_OneEuro():
     global x_filter
@@ -60,6 +70,7 @@ def reset_filters_for_measurements():
         case 0: # LOW_PASS
             return
         case 1: # MOVING_AVERAGE
+            reset_moving_average()
             return
         case 2: # LA_VIOLA
             reset_LaViola()
@@ -67,6 +78,9 @@ def reset_filters_for_measurements():
         case 3: # ONE_EURO
             reset_OneEuro()
             return
+
+def reset_moving_average():
+    init_filters_as_moving_average()    
 def reset_OneEuro():
     global x_filter
     global y_filter
