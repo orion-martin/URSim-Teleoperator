@@ -72,11 +72,11 @@ data_tracker.data_structure_add(
     ]
 )
 
-def data_zero_phase(data): # returns zero phased data
+def data_clean(data): # returns zero phased data
 
     data_as_2d_array = structured_to_unstructured(data)
 
-    data_zero_phased = zero_phase_filter.run_zero_phase_on_data(data_as_2d_array[:, :3])
+    data_zero_phased = zero_phase_filter.data_clean(data_as_2d_array[:, :3])
 
     data_zero_phased_with_frame = np.column_stack((data_zero_phased, data_as_2d_array[:, 3]))
 
@@ -175,13 +175,13 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
     data_prefiltered = data_prefiltered_suite["data"][30:]
     # the raw hand position with noise removed
-    data_prefiltered_noiseless = data_zero_phase(data_prefiltered)
+    data_prefiltered_noiseless = data_clean(data_prefiltered)
 
     # get the comparison data to compare against the base data
     data_TCP_suite = data_tracker.data_format(data_TCP_name)
     data_TCP = data_TCP_suite["data"][30:]
     # the raw TCP position with noise removed
-    data_TCP_noiseless = data_zero_phase(data_TCP)
+    data_TCP_noiseless = data_clean(data_TCP)
 
     data_noise = data_difference_get(data_TCP_noiseless, data_TCP) # gets the difference from the noiseless TCP position to the raw TCP position; measuring jitter
     data_lag = data_difference_get(data_prefiltered_noiseless, data_TCP_noiseless) # gets the difference from the ideal signal to the ideal TCP position, measuring lag
