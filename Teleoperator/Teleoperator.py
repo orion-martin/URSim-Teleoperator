@@ -14,8 +14,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--filter", default="MOVING_AVERAGE" )
-parser.add_argument("--settings", nargs="+", type=float, default=5)
+parser.add_argument("--filter", default="MOVING_AVERAGE")
+parser.add_argument("--settings", nargs="+", type=float, default=[5.0])
 
 args = parser.parse_args()
 
