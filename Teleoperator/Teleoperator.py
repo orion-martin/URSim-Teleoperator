@@ -10,13 +10,21 @@ import cv2
 import sys
 import random
 import numpy as np
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--filter", default="MOVING_AVERAGE" )
+parser.add_argument("--settings", nargs="+", type=float, default=5)
+
+args = parser.parse_args()
 
 try:
     with landmark_gatherer.vision.PoseLandmarker.create_from_options(landmark_gatherer.options) as landmarker:
 
         is_first_run = True
 
-        landmark_processor.init_filters()
+        landmark_processor.init_filters(landmark_processor.string_to_filter_type(args.filter), tuple(args.settings))
 
         data_tracker.logging_start()
         robot_director.start()

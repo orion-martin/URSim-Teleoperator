@@ -41,7 +41,7 @@ class Kalman(Filter):
         return self.kalman_filter.x[0]
 class LowPass(Filter):
 
-    def __init__(self, cutoff_freq, sampling_period):
+    def __init__(self, sampling_period, cutoff_freq):
         self.val_filtered_prev = 0
         self.first_run = True
         self.sampling_period = sampling_period
@@ -97,7 +97,7 @@ class MovingAverage(Filter):
 
 class OneEuro(Filter):
 
-    def __init__(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff, map_and_use_alphas=True):
+    def __init__(self, sampling_period, min_cutoff_freq, beta, derivative_cutoff, map_and_use_alphas=True):
         self.val_filtered_prev = 0
         self.first_run = True
         self.sampling_period = sampling_period
@@ -163,7 +163,7 @@ class OneEuro(Filter):
 
 class LaViola(Filter):
 
-    def __init__(self, cutoff_freq, sampling_period):
+    def __init__(self, sampling_period, cutoff_freq):
         self.val_filtered_prev = 0
         self.first_run = True
 
