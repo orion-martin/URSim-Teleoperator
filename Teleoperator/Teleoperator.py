@@ -70,7 +70,7 @@ try:
 
                     wrist_position = landmark_gatherer.wrist_position_get(landmarks)
 
-                    SCALING_FACTOR = 0.6
+                    SCALING_FACTOR = 0.75
 
                     wrist_position[0] = (wrist_position[0] * SCALING_FACTOR) + args.y_offset
                     wrist_position[1] = (wrist_position[1] * SCALING_FACTOR) - args.z_offset
