@@ -1,0 +1,7 @@
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 15
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 16
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 17
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 18
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 19
+--video_path move_slow_leftright_1 --x_offset 0.2 --filter MOVING_AVERAGE --settings 20
+
