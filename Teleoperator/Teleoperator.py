@@ -63,6 +63,13 @@ try:
                 if landmarks:
 
                     wrist_position = landmark_gatherer.wrist_position_get(landmarks)
+
+                    SCALING_FACTOR = 0.85
+
+                    wrist_position[0] = wrist_position[0] * SCALING_FACTOR
+                    wrist_position[1] = wrist_position[1] * SCALING_FACTOR
+                    wrist_position[2] = wrist_position[2] * SCALING_FACTOR
+
                     
                     wrist_position_unfiltered = wrist_position
                     if wrist_position is not None:
