@@ -14,13 +14,19 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--filter", default="MOVING_AVERAGE")
-parser.add_argument("--settings", nargs="+", type=float, default=[5.0])
+parser.add_argument("--video_path", default="PUT_VIDEO_PATH_HERE")
+parser.add_argument("--x_offset", type=float, default=0.0)
+parser.add_argument("--y_offset", type=float, default=0.0)
+parser.add_argument("--z_offset", type=float, default=0.0)
+parser.add_argument("--filter", default="NOTHING")
+parser.add_argument("--settings", nargs="+", type=float, default=[1.0])
 
 args = parser.parse_args()
 
 try:
     with landmark_gatherer.vision.PoseLandmarker.create_from_options(landmark_gatherer.options) as landmarker:
+
+        opencv_handler.initialize(args.video_path)
 
         is_first_run = True
 
@@ -64,11 +70,11 @@ try:
 
                     wrist_position = landmark_gatherer.wrist_position_get(landmarks)
 
-                    SCALING_FACTOR = 0.85
+                    SCALING_FACTOR = 0.6
 
-                    wrist_position[0] = wrist_position[0] * SCALING_FACTOR
-                    wrist_position[1] = wrist_position[1] * SCALING_FACTOR
-                    wrist_position[2] = wrist_position[2] * SCALING_FACTOR
+                    wrist_position[0] = (wrist_position[0] * SCALING_FACTOR) + args.y_offset
+                    wrist_position[1] = (wrist_position[1] * SCALING_FACTOR) - args.z_offset
+                    wrist_position[2] = (wrist_position[2] * SCALING_FACTOR) - args.x_offset
 
                     
                     wrist_position_unfiltered = wrist_position

@@ -3,20 +3,15 @@ import threading
 import time
 import queue
 
-# create window
-cv2.namedWindow("Teleoperator")
-# get the video path for our video
-video_path = "Videos/PUT_VIDEO_FILE_HERE.mp4"
-# declare and initialize video capture from default webcame, allows you to read webcam data on demand
-videoCapture = cv2.VideoCapture(video_path)
+videoCapture = None
 
 # if this is true, the frame processor will fully process every single frame in the video, storing them to frame_queue, before any frames are pushed.
 # if this is false, frames will be processed at the same time as they are pushed (note that a single frame is always processed first so that there is a frame to be pushed)
-PROCESS_FRAMES_FIRST = False
+PROCESS_FRAMES_FIRST = True
 
 force_stop = threading.Event()
 
-frameCapOk, frame = videoCapture.isOpened(), None
+frameCapOk, frame = True, None
 frame_lock = threading.Lock()
 
 allow_frame_pushing = threading.Event()
@@ -30,6 +25,25 @@ frame_counter_lock = threading.Lock()
 
 frame_queue = queue.Queue(maxsize=(0 if PROCESS_FRAMES_FIRST else 8))
 frame_queue_not_empty = threading.Event()
+
+def initialize(video_name, run_live=False):
+
+    global videoCapture
+    global frameCapOk
+    global frame
+    
+    # create window
+    cv2.namedWindow("Teleoperator")
+    # get the video path for our video
+    video_path = "Videos/" + video_name + ".mp4"
+    if (run_live):
+        # declare and initialize video capture from default webcame, allows you to read webcam data on demand
+        videoCapture = cv2.VideoCapture(0)
+    else:
+        # declare and initialize video capture from default videopath, processes data from the video saved on disk
+        videoCapture = cv2.VideoCapture(video_path)
+
+    frameCapOk, frame = videoCapture.isOpened(), None
 
 def process_frame():
 
