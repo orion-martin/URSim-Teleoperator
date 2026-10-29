@@ -1,6 +1,6 @@
 import math
 
-FIXED_ORIENT = [0.0, 3.14159, 0.0]  # tool pointing down (axis-angle, rad) — verify for your tool
+FIXED_ORIENT = [0.0, 0.0, 0.0]  # tool pointing down (axis-angle, rad) — verify for your tool
 
 IS_RUNNING_REAL = False
 
