@@ -35,7 +35,7 @@ try:
         data_tracker.logging_start()
         robot_director.start()
 
-        time.sleep(2.0)
+        time.sleep(0.5)
 
         t0 = time.perf_counter_ns() // 1000000
         robot_director.t0 = t0
