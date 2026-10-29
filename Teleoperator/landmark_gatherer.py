@@ -20,7 +20,7 @@ def on_result(result, output_image, timestamp_ms):
         landmark_written.set()
     
 base_options = mediapipe.tasks.BaseOptions(model_asset_path = str(MODEL_PATH))
-options = vision.PoseLandmarkerOptions(base_options=base_options, running_mode = vision.RunningMode.LIVE_STREAM, result_callback = on_result)
+options = vision.PoseLandmarkerOptions(base_options=base_options, running_mode = vision.RunningMode.LIVE_STREAM, result_callback = on_result, min_pose_detection_confidence=0.1, min_pose_presence_confidence=0.25)
 
 # wrist ID in mediapipe is 16
 WRIST_ID = 16
