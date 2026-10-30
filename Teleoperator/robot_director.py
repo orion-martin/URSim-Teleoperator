@@ -10,7 +10,9 @@ robot_stop_flag = threading.Event()
 robot_ready = threading.Event()
 control_error = None
 
-target = [0.2, -0.2, 0.6, 0.0, 3.14159, 0.0]
+enable_safety_limits = threading.Event()
+
+target = [0.2, -0.2, 0.6, 0, 0, 0]
 data_ind = -1
 frame_of_update = -1
 t0 = 0
@@ -47,6 +49,10 @@ def update_arm(robot_ip, stop_event:threading.Event):
                 tcp_pose = list(target)
                 data_ind_threaded = data_ind
                 frame_of_update_threaded = frame_of_update
+
+            if (enable_safety_limits.is_set() and tcp_pose[2] < 0.225):
+                print("TARGET EXCEEDED SAFETY LIMITS! Z TOO LOW!")
+                break
             
             if (data_ind_threaded != data_ind_last):
                 data_tracker.data_element_add("timestamps", data_ind_threaded, "t_published", (time.perf_counter_ns() // 1000000) - t0)
@@ -57,6 +63,10 @@ def update_arm(robot_ip, stop_event:threading.Event):
                 re_defined_x = robot_tcp[1]   # our X = robot Y
                 re_defined_y = -robot_tcp[2]  # our Y = robot -Z
                 re_defined_z = -robot_tcp[0]  # our Z = robot -X
+                
+                if (enable_safety_limits.is_set() and robot_tcp[2] < 0.225):
+                    print("ROBOT EXCEEDED SAFETY LIMITS! Z TOO LOW!")
+                    break
 
                 data_tracker.data_quick_write("robot_tcp_position", ['x', 'y', 'z', 't_write'], [re_defined_x, re_defined_y, re_defined_z, frame_of_update_threaded])
 

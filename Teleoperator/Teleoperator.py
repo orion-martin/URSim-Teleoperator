@@ -47,6 +47,8 @@ try:
             opencv_handler.frame_pushed.wait()
             opencv_handler.frame_pushed.clear()
 
+            robot_director.enable_safety_limits.set()
+
             if (data_tracker.data_availability_queue_empty.is_set()):
                 sys.exit(f"Data availability queue is empty. Exiting program.")
 
