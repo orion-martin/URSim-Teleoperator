@@ -27,7 +27,6 @@ args = parser.parse_args()
 try:
     with landmark_gatherer.vision.PoseLandmarker.create_from_options(landmark_gatherer.options) as landmarker:
         
-        arg_string = " ".join(f"--{k} {' '.join(map(str, v)) if isinstance(v, list) else v}" for k, v in vars(args).items())
         
         opencv_handler.initialize(args.video_path)
 
@@ -38,7 +37,8 @@ try:
         data_tracker.logging_start()
         robot_director.start()
 
-        data_tracker.data_quick_write("settings", ["settings"], [arg_string])
+        arg_settings  = "{" + f"Filter:{args.filter}, Settings:{' '.join(map(str, args.settings))}, Offsets:({args.x_offset}, {args.y_offset}, {args.z_offset}), Video:{args.video_path}" + "}"
+        data_tracker.data_quick_write("settings", ["settings"], [arg_settings])
 
         time.sleep(0.5)
 
