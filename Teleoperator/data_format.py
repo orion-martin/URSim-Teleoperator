@@ -71,6 +71,15 @@ data_tracker.data_structure_add(
         '%d',
     ]
 )
+data_tracker.data_structure_add(
+    "settings",
+    [
+        ('settings', 'O'),
+    ],
+    [
+        '%s',
+    ]
+)
 
 def data_clean(data): # returns zero phased data
 
@@ -206,7 +215,7 @@ def data_finalize(verbose_logging):
 
     data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging)
     data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging)
-    
+    data_save("settings")
     data_save("timestamps")
     if (verbose_logging):
         data_save("pre_filter_position")

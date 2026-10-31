@@ -14,7 +14,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--video_path", default="PUT_VIDEO_PATH_HERE")
+parser.add_argument("--video_path", default="move_slow_leftright_4")
 parser.add_argument("--x_offset", type=float, default=0.0)
 parser.add_argument("--y_offset", type=float, default=0.0)
 parser.add_argument("--z_offset", type=float, default=0.2) # Z defaults to having an offset of 0.2m (200mm), this is so safety limits aren't exceeded by videos recorded with hands at hip level
@@ -26,7 +26,9 @@ args = parser.parse_args()
 
 try:
     with landmark_gatherer.vision.PoseLandmarker.create_from_options(landmark_gatherer.options) as landmarker:
-
+        
+        arg_string = " ".join(f"--{k} {' '.join(map(str, v)) if isinstance(v, list) else v}" for k, v in vars(args).items())
+        
         opencv_handler.initialize(args.video_path)
 
         is_first_run = True
@@ -35,6 +37,8 @@ try:
 
         data_tracker.logging_start()
         robot_director.start()
+
+        data_tracker.data_quick_write("settings", ["settings"], [arg_string])
 
         time.sleep(0.5)
 
