@@ -170,7 +170,7 @@ def average_get_from_error_data(data):
 
     return [[averages[0], averages[1], averages[2], average_position_error]]
 
-def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
+def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_intermediary_values):
     # get the base data (the "original" being compared against)
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
     data_prefiltered = data_prefiltered_suite["data"][30:]
@@ -189,25 +189,26 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name):
     format = data_prefiltered_suite["format"]
     header = data_prefiltered_suite["header"]
 
-    data_saver.data_save_singular("TCP_jitter", data_noise, format, header)
-    data_saver.data_save_singular("TCP_lag", data_lag, format, header)
+    if (log_intermediary_values):
+        data_saver.data_save_singular("TCP_jitter", data_noise, format, header)
+        data_saver.data_save_singular("TCP_lag", data_lag, format, header)
 
-    # these two saves aren't necessary, as what they save is just intermediary data used for calculating noise and lag.
-    # I've left them commented out, but if you need them for some reason, just uncomment them and it should work out of the box.
-    data_saver.data_save_singular("prefilter_position_noiseless", data_prefiltered_noiseless, format, header)
-    data_saver.data_save_singular("TCP_position_noiseless", data_TCP_noiseless, format, header)
+        data_saver.data_save_singular("prefilter_position_noiseless", data_prefiltered_noiseless, format, header)
+        data_saver.data_save_singular("TCP_position_noiseless", data_TCP_noiseless, format, header)
 
-    data_saver.data_save_singular("RMSE_jitter", RMSE_get_from_error_data(data_noise), ['%.16f', '%.16f', '%.16f', '%.16f'], header)
-    data_saver.data_save_singular("average_lag", average_get_from_error_data(data_lag), ['%.16f', '%.16f', '%.16f', '%.16f'], header)
-    
+    data_saver.data_save_singular("RMSE_jitter", RMSE_get_from_error_data(data_noise), ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total")
+    data_saver.data_save_singular("average_lag", average_get_from_error_data(data_lag), ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total")
 def data_save(name):
     data = data_tracker.data_format(name)
 
     data_saver.data_save_singular(name, data["data"], data["format"], data["header"])
-def data_finalize():
+def data_finalize(verbose_logging):
 
-    data_TCP_measurements_save("pre_filter_position", "robot_tcp_position")
+    data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging)
+    data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging)
+    
     data_save("timestamps")
-    data_save("pre_filter_position")
-    data_save("post_filter_position")
-    data_save("robot_tcp_position")
+    if (verbose_logging):
+        data_save("pre_filter_position")
+        data_save("post_filter_position")
+        data_save("robot_tcp_position")

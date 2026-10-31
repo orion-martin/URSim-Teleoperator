@@ -20,6 +20,7 @@ parser.add_argument("--y_offset", type=float, default=0.0)
 parser.add_argument("--z_offset", type=float, default=0.2) # Z defaults to having an offset of 0.2m (200mm), this is so safety limits aren't exceeded by videos recorded with hands at hip level
 parser.add_argument("--filter", default="NOTHING")
 parser.add_argument("--settings", nargs="+", type=float, default=[1.0])
+parser.add_argument("--verbose_logging", type=bool, default=False)
 
 args = parser.parse_args()
 
@@ -117,6 +118,6 @@ finally:
 
 # this code only runs on successful execution of the program. If an error occurs these remaining lines won't run. If something MUST run put in in the "finally" above
 
-data_format.data_finalize()
+data_format.data_finalize(args.verbose_logging)
 
 print("Program End")
