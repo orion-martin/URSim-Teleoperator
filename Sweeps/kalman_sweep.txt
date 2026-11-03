@@ -1,88 +1,120 @@
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_leftright_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_leftright_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_leftright_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_leftright_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_leftright_5 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_updown_1 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_updown_2 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_updown_3 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_updown_4 --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_circular --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0005
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.001
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00125
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0015
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00175
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.002
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.005
---video_path move_slow_waveleftright --x_offset 0.2 --filter KALMAN --settings 0.00000473763 0.01
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.84
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.044
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.014
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0067
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.004
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0026
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0017
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0012
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00087
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00065
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00049
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00038
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0003
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00024
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00019
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00014
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00011
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000073
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000049
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000033
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000022
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000015
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00001
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.84
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.044
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.014
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0067
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.004
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0026
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0017
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0012
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00087
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00065
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00049
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00038
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0003
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00024
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00019
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00014
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00011
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000073
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000049
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000033
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000022
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000015
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00001
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.84
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.044
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.014
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0067
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.004
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0026
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0017
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0012
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00087
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00065
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00049
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00038
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.0003
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00024
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00019
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00014
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00011
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000073
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000049
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000033
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000022
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.000015
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.2 --filter KALMAN --settings 0.00000473763 0.00001
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.84
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.044
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.014
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0067
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.004
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0026
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0017
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0012
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00087
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00065
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00049
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00038
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0003
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00024
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00019
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00014
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00011
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000073
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000049
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000033
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000022
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000015
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00001
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.84
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.044
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.014
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0067
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.004
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0026
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0017
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0012
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00087
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00065
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00049
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00038
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0003
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00024
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00019
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00014
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00011
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000073
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000049
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000033
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000022
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.000015
+--video_path move_slow_waveleftright --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00001
