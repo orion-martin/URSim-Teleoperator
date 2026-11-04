@@ -72,7 +72,7 @@ def update_arm(robot_ip, stop_event:threading.Event):
 
                 data_ind_last = data_ind_threaded
 
-            rtde.servoL(tcp_pose, 0.5, 0.5, 1.0/500, 0.03, 500)
+            rtde.servoL(tcp_pose, 0.5, 0.5, 1.0/500, 0.03, 300)
 
             rtde.waitPeriod(start_time)
 
