@@ -12,7 +12,7 @@ control_error = None
 
 enable_safety_limits = threading.Event()
 
-target = [0.2, -0.2, 0.6, 0, 0, 0]
+target = [0.5, -0.2, 0.35, 0, 0, 0]
 data_ind = -1
 frame_of_update = -1
 t0 = 0
