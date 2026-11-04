@@ -15,7 +15,7 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--video_path", default="move_slow_leftright_4")
-parser.add_argument("--x_offset", type=float, default=0.0)
+parser.add_argument("--x_offset", type=float, default=0.2)
 parser.add_argument("--y_offset", type=float, default=0.0)
 parser.add_argument("--z_offset", type=float, default=0.2) # Z defaults to having an offset of 0.2m (200mm), this is so safety limits aren't exceeded by videos recorded with hands at hip level
 parser.add_argument("--filter", default="NOTHING")
