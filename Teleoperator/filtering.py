@@ -75,6 +75,9 @@ class MovingAverage(Filter):
     
     def filter_value(self, val, timestamp, frame):
 
+        if (self.look_back_size == 1):
+            return val
+
         dt = timestamp - self.timestamp_last
         self.timestamp_last = timestamp
 
