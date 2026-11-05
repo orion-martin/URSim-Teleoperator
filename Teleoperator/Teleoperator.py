@@ -37,8 +37,9 @@ try:
         data_tracker.logging_start()
         robot_director.start()
 
-        arg_settings  = "{" + f"Filter:{args.filter}, Settings:{' '.join(map(str, args.settings))}, Offsets:({args.x_offset}, {args.y_offset}, {args.z_offset}), Video:{args.video_path}" + "}"
-        data_tracker.data_quick_write("settings", ["settings"], [arg_settings])
+        settings_as_string = '__'.join(map(str, args.settings))
+        configuration_as_string  = "{" + f"Filter:{args.filter}, Settings:{' '.join(map(str, args.settings))}, Offsets:({args.x_offset}, {args.y_offset}, {args.z_offset}), Video:{args.video_path}" + "}"
+        data_tracker.data_quick_write("settings", ["settings"], [configuration_as_string])
 
         time.sleep(0.5)
 
@@ -122,6 +123,6 @@ finally:
 
 # this code only runs on successful execution of the program. If an error occurs these remaining lines won't run. If something MUST run put in in the "finally" above
 
-data_format.data_finalize(args.verbose_logging)
+data_format.data_finalize(args.verbose_logging, args.filter, args.video_path, configuration_as_string, settings_as_string.replace('.', '_'))
 
 print("Program End")

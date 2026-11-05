@@ -180,7 +180,7 @@ def average_get_from_error_data(data):
 
     return [[averages[0], averages[1], averages[2], average_position_error]]
 
-def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_intermediary_values, date):
+def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_intermediary_values, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string):
     # get the base data (the "original" being compared against)
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
     data_prefiltered = data_prefiltered_suite["data"][30:]
@@ -199,6 +199,9 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_interme
     format = data_prefiltered_suite["format"]
     header = data_prefiltered_suite["header"]
 
+    RMSE_jitter_final = RMSE_get_from_error_data(data_noise)
+    average_lag_final = average_get_from_error_data(data_lag)
+
     if (log_intermediary_values):
         data_saver.data_save_singular("TCP_jitter", data_noise, format, header, date)
         data_saver.data_save_singular("TCP_lag", data_lag, format, header, date)
@@ -206,20 +209,34 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_interme
         data_saver.data_save_singular("prefilter_position_noiseless", data_prefiltered_noiseless, format, header, date)
         data_saver.data_save_singular("TCP_position_noiseless", data_TCP_noiseless, format, header, date)
 
-    data_saver.data_save_singular("RMSE_jitter", RMSE_get_from_error_data(data_noise), ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
-    data_saver.data_save_singular("average_lag", average_get_from_error_data(data_lag), ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
+        data_saver.data_save_singular("RMSE_jitter", RMSE_jitter_final, ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
+        data_saver.data_save_singular("average_lag", average_lag_final, ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
+
+    final_measurements = [[RMSE_jitter_final[0][3], average_lag_final[0][3], str(filter_configuration_as_string)]]
+
+    data_saver.data_save_singular_with_path(
+        file_name=video_path + "___" + filter_settings_as_string,
+        file_path=filter_type,
+        formatted_data=final_measurements,
+        data_format='%s',
+        data_header="RMSE_jitter, Average_lag, Settings",
+        date=date,
+        save_with_date=False,
+        with_letter_suffix=True
+        )
+
 def data_save(name, date):
     data = data_tracker.data_format(name)
 
     data_saver.data_save_singular(name, data["data"], data["format"], data["header"], date)
-def data_finalize(verbose_logging):
+def data_finalize(verbose_logging, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string):
     
     date = datetime.now()
     
-    data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging, date)
-    data_save("settings", date)
-    data_save("timestamps", date)
+    data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string)
     if (verbose_logging):
+        data_save("timestamps", date)
+        data_save("settings", date)
         data_save("pre_filter_position", date)
         data_save("post_filter_position", date)
         data_save("robot_tcp_position", date)
