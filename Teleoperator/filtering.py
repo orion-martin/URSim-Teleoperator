@@ -106,8 +106,8 @@ class OneEuro(Filter):
         self.sampling_period = sampling_period
         self.min_cutoff_freq = min_cutoff_freq
         self.beta = beta
-        self.internal_lowpass = LowPass(1, sampling_period)
-        self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
+        self.internal_lowpass = LowPass(sampling_period, 1)
+        self.derivative_lowpass = LowPass(sampling_period, derivative_cutoff)
 
         # a dictionary that maps frames to alpha values for each frame.
         # in a normal run this will only be saving values and will never be used, just written.
@@ -116,14 +116,14 @@ class OneEuro(Filter):
         self.frames_to_alphas = {-1:0}
         self.map_and_use_alphas = map_and_use_alphas
 
-    def reset_but_keep_frames_to_alphas(self, min_cutoff_freq, sampling_period, beta, derivative_cutoff):
+    def reset_but_keep_frames_to_alphas(self, sampling_period, min_cutoff_freq, beta, derivative_cutoff):
         self.val_filtered_prev = 0
         self.first_run = True
         self.sampling_period = sampling_period
         self.min_cutoff_freq = min_cutoff_freq
         self.beta = beta
-        self.internal_lowpass = LowPass(1, sampling_period)
-        self.derivative_lowpass = LowPass(derivative_cutoff, sampling_period)
+        self.internal_lowpass = LowPass(sampling_period, 1)
+        self.derivative_lowpass = LowPass(sampling_period, derivative_cutoff)
 
     # One Euro uses the frame parameter because we need to save the alpha for each frame to rerun the exact filtering process again and measure lag later
     def filter_value(self, val, timestamp, frame):
@@ -167,25 +167,13 @@ class OneEuro(Filter):
 class LaViola(Filter):
 
     def __init__(self, sampling_period, cutoff_freq):
-        self.val_filtered_prev = 0
-        self.first_run = True
-
         self.cutoff_freq = cutoff_freq
         self.sampling_period = sampling_period
 
-        self.lowpass_first_order = LowPass(cutoff_freq, sampling_period)
-        self.lowpass_second_order = LowPass(cutoff_freq, sampling_period)
+        self.lowpass_first_order = LowPass(sampling_period, cutoff_freq)
+        self.lowpass_second_order = LowPass(sampling_period, cutoff_freq)
 
     def filter_value(self, val, timestamp, frame):
-
-        data_update_rate = 1 / self.sampling_period
-
-        # we need to set a value for val_filtered_prev if we've never run before, so we assign it to val on the first run.
-        # this basically makes our first run's filtered value just be the unfilitered value, but just for the first run
-        if (self.first_run):
-            self.first_run = False
-
-            return self.lowpass_first_order.filter_value(val, timestamp, frame)
 
         val_first_order = self.lowpass_first_order.filter_value(val, timestamp, frame)
         val_second_order = self.lowpass_second_order.filter_value(val_first_order, timestamp, frame)
