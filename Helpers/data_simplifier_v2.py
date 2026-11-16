@@ -21,7 +21,7 @@ for file_name_cur in file_names:
         next(f)
         rows = [line.rstrip('\n').split(',', 2) for line in f][0]
 
-    data_as_single_arr.append([rows[0], rows[1], rows[2]])
+    data_as_single_arr.append([rows[1], rows[0], rows[2]]) # reorder lag before jitter
 
 # make sure the Data folder exists before trying to save data to it with data_save_singular(...)
 DATA_DIR = Path(__file__).resolve().parent.parent / "Measurement Results"
