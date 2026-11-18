@@ -1,0 +1,1 @@
+first run kalman_sweep_additional_videos.txt, then replacement_sweep.txt, and then all three of the bending sweeps
