@@ -1,0 +1,5 @@
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 17
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 2
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 1
+--video_path move_slow_leftright_5 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 17
+--video_path move_slow_updown_1 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 12

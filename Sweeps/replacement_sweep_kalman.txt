@@ -1,0 +1,5 @@
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00076
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00003
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0066
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.0024
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 0.00007

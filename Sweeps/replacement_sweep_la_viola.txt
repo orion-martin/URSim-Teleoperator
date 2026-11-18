@@ -1,0 +1,9 @@
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.78
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.41
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.32
+--video_path move_slow_leftright_4 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.27
+--video_path move_slow_leftright_5 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.91
+--video_path move_slow_leftright_5 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.19
+--video_path move_slow_updown_1 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.45
+--video_path move_slow_updown_1 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.41
+--video_path move_slow_updown_1 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 0.11
