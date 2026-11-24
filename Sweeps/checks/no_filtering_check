@@ -1,0 +1,48 @@
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter NOTHING --settings 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 1000 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 10
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 0 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 5
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 2 0 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 10
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.9 0 1
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 15
+--video_path move_slow_circular --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.55 0 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter NOTHING --settings 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 1000 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 10
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 0 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 5
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 2 0 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 10
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.9 0 1
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 15
+--video_path move_slow_leftright_1 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.55 0 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter NOTHING --settings 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 1000 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 10
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 0 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 5
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 2 0 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 10
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.9 0 1
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 15
+--video_path move_slow_leftright_2 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.55 0 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter NOTHING --settings 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 1000 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter LA_VIOLA --settings 10
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter KALMAN --settings 0.00000473763 10
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 10 0 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 5
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 2 0 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 10
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.9 0 1
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter MOVING_AVERAGE --settings 15
+--video_path move_slow_leftright_3 --x_offset 0.2 --z_offset 0.3 --filter ONE_EURO --settings 0.55 0 1
