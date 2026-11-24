@@ -35,8 +35,9 @@ try:
         landmark_processor.init_filters(landmark_processor.string_to_filter_type(args.filter), tuple(args.settings))
 
         data_tracker.logging_start()
-        robot_director.start()
-
+        if (not robot_director.start()):
+            sys.exit(1)
+            
         settings_as_string = '__'.join(map(str, args.settings))
         configuration_as_string  = "{" + f"Filter:{args.filter}, Settings:{' '.join(map(str, args.settings))}, Offsets:({args.x_offset}, {args.y_offset}, {args.z_offset}), Video:{args.video_path}" + "}"
         data_tracker.data_quick_write("settings", ["settings"], [configuration_as_string])

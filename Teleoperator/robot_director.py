@@ -23,16 +23,22 @@ def update_arm(robot_ip, stop_event:threading.Event):
     global control_error
     global ts_grab_last
 
+    rtde = None
+    rtde_receive = None
+
     try:
         rtde = RTDEControlInterface(robot_ip)
-    except Exception as e:
-        control_error = e
-        robot_ready.set()
-        return
-    try:
         rtde_receive = RTDEReceiveInterface(robot_ip)
     except Exception as e:
         control_error = e
+        for iface in (rtde, rtde_receive):
+            if iface is None:
+                continue
+            for cleanup in ((iface.stopScript, iface.disconnect) if iface is rtde else (iface.disconnect,)):
+                try:
+                    cleanup()
+                except Exception as ce:
+                    print("Robot disconnection/cleanup failed: ", ce)
         robot_ready.set()
         return
     
@@ -77,7 +83,7 @@ def update_arm(robot_ip, stop_event:threading.Event):
             rtde.waitPeriod(start_time)
 
     finally:
-        for cleanup in (rtde.servoStop, rtde.stopScript, rtde.disconnect):
+        for cleanup in (rtde.servoStop, rtde.stopScript, rtde.disconnect, rtde_receive.disconnect):
             try:
                 cleanup()
             except Exception as e:
@@ -102,7 +108,7 @@ def start():
     global control_thread, control_error
 
     if (control_thread.is_alive()):
-        return
+        return True
 
     robot_stop_flag.clear()
     robot_ready.clear()
@@ -115,8 +121,11 @@ def start():
     if not robot_ready.wait(timeout=10.0):
         robot_stop_flag.set()
         print("Robot Control Failed: connection timed out")
+        return False
     elif control_error is not None:
         print("Robot Control Failed: ", control_error)
+        return False
+    return True
     
 #ends the control thread safely
 def end():
