@@ -28,7 +28,7 @@ def update_arm(robot_ip, stop_event:threading.Event):
 
     try:
         rtde = RTDEControlInterface(robot_ip)
-        rtde_receive = RTDEReceiveInterface(robot_ip)
+        rtde_receive = RTDEReceiveInterface(robot_ip, 500.0, ["actual_TCP_pose", "timestamp"])
     except Exception as e:
         control_error = e
         for iface in (rtde, rtde_receive):
@@ -45,6 +45,8 @@ def update_arm(robot_ip, stop_event:threading.Event):
     robot_ready.set()
 
     data_ind_last = -1
+
+    ts_last = 0
 
     try:
         while not stop_event.is_set():
@@ -65,6 +67,16 @@ def update_arm(robot_ip, stop_event:threading.Event):
                 data_tracker.data_report("timestamps", data_ind_threaded)
 
                 robot_tcp = rtde_receive.getActualTCPPose()
+                ts = rtde_receive.getTimestamp()
+                if ts == ts_last:
+                    stale_count += 1
+                    if stale_count > 15:   # ~0.5 s of frames with no new data
+                        control_error = "receive feed stale"
+                        break
+                else:
+                    stale_count = 0
+                ts_last = ts
+
 
                 re_defined_x = robot_tcp[1]   # our X = robot Y
                 re_defined_y = -robot_tcp[2]  # our Y = robot -Z
