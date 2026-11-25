@@ -180,6 +180,50 @@ def average_get_from_error_data(data):
 
     return [[averages[0], averages[1], averages[2], average_position_error]]
 
+def data_post_filter_measurements_save(data_prefiltered_name, data_postfilter_name, log_intermediary_values, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string):
+    # get the base data (the "original" being compared against)
+    data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
+    data_prefiltered = data_prefiltered_suite["data"][30:]
+    # the raw hand position with noise removed
+    data_prefiltered_noiseless = data_clean(data_prefiltered)
+
+    # get the comparison data to compare against the base data
+    data_TCP_suite = data_tracker.data_format(data_postfilter_name)
+    data_TCP = data_TCP_suite["data"][30:]
+    # the raw TCP position with noise removed
+    data_TCP_noiseless = data_clean(data_TCP)
+
+    data_noise = data_difference_get(data_TCP_noiseless, data_TCP) # gets the difference from the noiseless TCP position to the raw TCP position; measuring jitter
+    data_lag = data_difference_get(data_prefiltered_noiseless, data_TCP_noiseless) # gets the difference from the ideal signal to the ideal TCP position, measuring lag
+
+    format = data_prefiltered_suite["format"]
+    header = data_prefiltered_suite["header"]
+
+    RMSE_jitter_final = RMSE_get_from_error_data(data_noise)
+    average_lag_final = average_get_from_error_data(data_lag)
+
+    if (log_intermediary_values):
+        data_saver.data_save_singular("post_filter_jitter", data_noise, format, header, date)
+        data_saver.data_save_singular("post_filter_lag", data_lag, format, header, date)
+
+        data_saver.data_save_singular("prefilter_position_noiseless", data_prefiltered_noiseless, format, header, date)
+        data_saver.data_save_singular("post_filter_position_noiseless", data_TCP_noiseless, format, header, date)
+
+        data_saver.data_save_singular("post_filter_RMSE_jitter", RMSE_jitter_final, ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
+        data_saver.data_save_singular("post_filter_average_lag", average_lag_final, ['%.16f', '%.16f', '%.16f', '%.16f'], "x, y, z, total", date)
+
+    final_measurements = [[RMSE_jitter_final[0][3], average_lag_final[0][3], str(filter_configuration_as_string)]]
+
+    data_saver.data_save_singular_with_path(
+        file_name=f"postfilter__{video_path}___{filter_settings_as_string}",
+        file_path=filter_type,
+        formatted_data=final_measurements,
+        data_format='%s',
+        data_header="RMSE_jitter, Average_lag, Settings",
+        date=date,
+        save_with_date=False,
+        with_letter_suffix=True
+        )
 def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_intermediary_values, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string):
     # get the base data (the "original" being compared against)
     data_prefiltered_suite = data_tracker.data_format(data_prefiltered_name)
@@ -215,7 +259,7 @@ def data_TCP_measurements_save(data_prefiltered_name, data_TCP_name, log_interme
     final_measurements = [[RMSE_jitter_final[0][3], average_lag_final[0][3], str(filter_configuration_as_string)]]
 
     data_saver.data_save_singular_with_path(
-        file_name=video_path + "___" + filter_settings_as_string,
+        file_name=f"TCP__{video_path}___{filter_settings_as_string}",
         file_path=filter_type,
         formatted_data=final_measurements,
         data_format='%s',
@@ -232,7 +276,7 @@ def data_save(name, date):
 def data_finalize(verbose_logging, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string):
     
     date = datetime.now()
-    
+    data_post_filter_measurements_save("pre_filter_position", "post_filter_position", verbose_logging, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string)
     data_TCP_measurements_save("pre_filter_position", "robot_tcp_position", verbose_logging, date, filter_type, video_path, filter_configuration_as_string, filter_settings_as_string)
     if (verbose_logging):
         data_save("timestamps", date)
